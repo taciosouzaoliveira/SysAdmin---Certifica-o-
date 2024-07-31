@@ -1,0 +1,41 @@
+Instalação Visual Studio Code
+
+Consulte a página Baixar Visual Studio Code para obter uma lista completa das opções de instalação disponíveis.
+
+Ao baixar e usar o Visual Studio Code, você concorda com os termos de licença e a declaração de privacidade .
+
+Distribuições baseadas em Debian e Ubuntu
+A maneira mais fácil de instalar o Visual Studio Code para distribuições baseadas em Debian/Ubuntu é baixar e instalar o pacote .deb (64 bits) , através do centro de software gráfico, se estiver disponível, ou através da linha de comando com:
+
+sudo apt install ./<file>.deb
+
+# If you're on an older Linux distribution, you will need to run this instead:
+# sudo dpkg -i <file>.deb
+# sudo apt-get install -f # Install dependencies
+Observe que outros binários também estão disponíveis na página de download do VS Code .
+
+Instalar o pacote .deb instalará automaticamente o repositório apt e a chave de assinatura para habilitar a atualização automática usando o gerenciador de pacotes do sistema. Como alternativa, o repositório e a chave também podem ser instalados manualmente com o seguinte script:
+
+sudo apt-get install wget gpg
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+rm -f packages.microsoft.gpg
+Em seguida, atualize o cache do pacote e instale o pacote usando:
+
+sudo apt install apt-transport-https
+sudo apt update
+sudo apt install code # or code-insiders
+Distribuições baseadas em RHEL, Fedora e CentOS
+Atualmente, enviamos o VS Code estável de 64 bits em um repositório yum. O script a seguir instalará a chave e o repositório:
+
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+Em seguida, atualize o cache do pacote e instale o pacote usando dnf(Fedora 22 e superior):
+
+dnf check-update
+sudo dnf install code # or code-insiders
+Ou em versões mais antigas usando yum:
+
+yum check-update
+sudo yum install code # or code-insiders
